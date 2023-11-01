@@ -1,0 +1,1 @@
+whoami&ipconfig
